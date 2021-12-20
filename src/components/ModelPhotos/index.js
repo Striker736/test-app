@@ -37,6 +37,9 @@ const ModelPhotosComponent = styled.div`
     top: 0;
     z-index: 1;
   }
+  .ant-image-img {
+    object-fit: cover;
+  }
 `;
 
 const ModelPhotos = (props) => {
