@@ -18,6 +18,7 @@ const ModelPhotosComponent = styled.div`
     flex-wrap: wrap;
   }
   .image-card {
+    background: #000;
     height: ${(props) => props.height};
     color: white;
     margin: 0.5rem;
@@ -27,9 +28,6 @@ const ModelPhotosComponent = styled.div`
     flex: 1 0 auto;
     position: relative;
   }
-  .ant-image {
-    width: 100%;
-  }
   .image-detail {
     background: #3bb3ea;
     color: #fff;
@@ -37,8 +35,9 @@ const ModelPhotosComponent = styled.div`
     top: 0;
     z-index: 1;
   }
-  .ant-image-img {
-    object-fit: cover;
+  .ant-image {
+    margin: 0 auto;
+    display: flex;
   }
 `;
 
@@ -73,9 +72,20 @@ const ModelPhotos = (props) => {
     }
   };
 
+  const getWidth = (image) => {
+    switch (sizeOption) {
+      case "small":
+        return (image.Width * 10) / image.Height + "rem";
+      case "medium":
+        return (image.Width * 15) / image.Height + "rem";
+      default:
+        return (image.Width * 20) / image.Height + "rem";
+    }
+  };
+
   return (
     <ModelPhotosComponent height={getHeight()}>
-      <MDBRow className="masonry-with-columns-2" id="masonry-with-columns-2">
+      <div className="masonry-with-columns-2" id="masonry-with-columns-2">
         {images.map((image, index) => {
           return (
             <div key={index} className="image-card">
@@ -84,11 +94,15 @@ const ModelPhotos = (props) => {
                   ? image.DateCreated
                   : "Rating: " + image.Rating.averageRating}
               </div>
-              <Image src={getImageUrl(image)} height={getHeight()} />
+              <Image
+                src={getImageUrl(image)}
+                height={getHeight()}
+                width={getWidth(image)}
+              />
             </div>
           );
         })}
-      </MDBRow>
+      </div>
     </ModelPhotosComponent>
   );
 };
